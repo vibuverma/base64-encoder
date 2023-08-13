@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Base64 Encoding and Decoding</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+    .navbar {
+        background-color: #6e6868;
+        overflow: hidden;
+    }
+    .navbar a {
+        float: left;
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+    }
+    .navbar a:hover {
+        background-color: #ddd;
+        color: black;
+    }
+    .tabcontent {
+        display: none;
+        padding: 20px;
+        text-align: center; /* Center-align content within each tab's section */
+    }
+    .input-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 10px;
+    }
+    textarea {
+        margin-bottom: 10px;
+        resize: none;
+    }
+    .button-container {
+        display: flex;
+        justify-content: center;
+    }
+    button {
+        margin: 0 10px;
+    }
+</style>
+</head>
+<body>
+
+<div class="navbar">
+    <a href="javascript:void(0);" class="tablink" onclick="openTab(event, 'Encode')">Encode</a>
+    <a href="javascript:void(0);" class="tablink" onclick="openTab(event, 'Decode')">Decode</a>
+</div>
+
+<div id="Encode" class="tabcontent">
+    <h2>Base64 Encoding</h2>
+    <div class="input-container">
+        <textarea id="encodeInput" rows="7" cols="100" placeholder="Enter text to encode"></textarea>
+        <div class="button-container">
+            <button onclick="encodeText()">Encode</button>
+            <button onclick="clearEncodeText()">Clear</button>
+        </div>
+    </div>
+    <p>Encoded Result:</p>
+    <textarea id="encodedResult" rows="7" cols="100" readonly></textarea>
+</div>
+
+<div id="Decode" class="tabcontent">
+    <h2>Base64 Decoding</h2>
+    <div class="input-container">
+        <textarea id="decodeInput" rows="7" cols="100" placeholder="Enter text to decode"></textarea>
+        <div class="button-container">
+            <button onclick="decodeText()">Decode</button>
+            <button onclick="clearDecodeText()">Clear</button>
+        </div>
+    </div>
+    <p>Decoded Result:</p>
+    <textarea id="decodedResult" rows="7" cols="100" readonly></textarea>
+</div>
+
+<script>
+    function openTab(evt, tabName) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tablink");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+        document.getElementById(tabName).style.display = "block";
+        evt.currentTarget.className += " active";
+    }
+
+    function encodeText() {
+        var input = document.getElementById("encodeInput").value;
+        var encoded = btoa(input);
+        document.getElementById("encodedResult").value = encoded;
+    }
+
+    function decodeText() {
+        var input = document.getElementById("decodeInput").value;
+        try {
+            var decoded = atob(input);
+            document.getElementById("decodedResult").value = decoded;
+        } catch (error) {
+            document.getElementById("decodedResult").value = "Invalid Base64 input";
+        }
+    }
+
+    function clearEncodeText() {
+        document.getElementById("encodeInput").value = "";
+        document.getElementById("encodedResult").value = "";
+    }
+
+    function clearDecodeText() {
+        document.getElementById("decodeInput").value = "";
+        document.getElementById("decodedResult").value = "";
+    }
+
+    // Open the default tab
+    document.getElementsByClassName("tablink")[0].click();
+</script>
+
+</body>
+</html>
